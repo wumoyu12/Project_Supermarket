@@ -1,49 +1,65 @@
 import os.path
 from os import path
 
-def AskNum():
-    global howmany, count
-    print("1.Apple:$0.98 for each\n2.Pear: 0.99 for each\n3.Orange: $0.96 each \n4.Pomegranate: $7.50 for each\n5.Durian Fruit: $25.99 for each")
-    howmany=str(input("How many type of fruits do you want to buy?"))
-    CheckNum()
-    count = int(howmany)
-    Askfruits()
-def CheckNum():
-    numlen = len(howmany)
-    if numlen != 1:
-        print("Enter a valid number!")
-        AskNum()
-    else:
-        numlist = list(howmany)
-        for i in range(0,len(numlist)):
-            newnum = ord(numlist[i])
-            if (newnum < 49 or newnum > 53):
-                print("Enter a valid number!")
-                AskNum()
-def Askfruits():
-    global fruits, count
-    while count != 0:
-        fruits = str(input("What type of fruits do you want to buy?(Please enter the number representing the fruit you want to buy)"))
-        Checkfruits()
-        count - 1
-
-def Checkfruits():
-    fruitlen = len(fruits)
-    if fruitlen != 1:
-        print("Enter a valid number!")
-        Askfruits()
-    else:
-        fruitlist = list(fruits)
-        for i in range(0,len(fruitlist)):
-            newfruit = ord(fruitlist[i])
-            if (newfruit < 49 or newfruit > 53):
-                print("Enter a valid number!")
-                Askfruits()
-
-
 def main():
-    print("Welcome to the grocery store! We have the following fruits:")
+    print("Welcome to the Fruit Section!")
+    AskFruit()
+    
+def AskFruit():
+    global whichfruit
+    print("We have the following fruits:\n"
+          "1.Apple:$0.98 for each\n"
+          "2.Pear: 0.99 for each\n"
+          "3.Orange: $0.96 each\n"
+          "4.Pomegranate: $7.50 for each\n"
+          "5.Durian Fruit: $25.99 for each\n"
+          "Typy 0 to go back to Main Menu")
+    whichfruit=str(input("Which type fruit you want to buy?"))
+    CheckFruit()
+    
+def CheckFruit():
+    match(whichfruit):
+        case "0":
+            MainMunu()
+        case "1":
+            Apple()
+        case "2":
+            Pear()
+        case "3":
+            Orange()
+        case "4":
+            Pomegranate()
+        case "5":
+            DurianFruit()
+        case default:
+            print("It's an invalid selection, please try again")
+def MainMunu():
+    fileDir=os.path.dirname(os.path.realpath("__file__"))
+    filepath=fileDir+"\MainMenu.py"
+    filenamepath={
+                "__file__":filepath,
+                "__name__":"__main__",
+                }
+    with open(filepath,"rb") as file:
+        exec(compile(file.read(), filepath, "exec"), filenamepath)
+
+def Apple():
     AskNum()
+
+def Pear():
+    AskNum()
+
+def Orange():
+    AskNum()
+    
+def Pomegranate():
+    AskNum()
+    
+def DurianFruit():
+    AskNum()
+
+def AskNum(fruits):
+    howmany=str(input("How many fruits you want to buy"))
 
 if __name__ == "__main__":
     main()
