@@ -43,46 +43,51 @@ def MainMunu():
 
 def Apple():
     fruit = "Apple"
-    AskNum(fruit)
+    price = 0.98
+    AskNum(fruit, price)
     allfruit.append(fruit)
     fruitnum.append(howmany)
-    fruitprice.append(price)
+    fruitprice.append(fruitprice)
     
 def Pear():
     fruit = "Pear"
-    AskNum(fruit)
+    price = 0.99
+    AskNum(fruit, price)
     allfruit.append(fruit)
     fruitnum.append(howmany)
-    fruitprice.append(price)
+    fruitprice.append(fruitprice)
     
 def Orange():
     fruit = "Orange"
-    AskNum(fruit)
+    price = 0.96
+    AskNum(fruit, price)
     allfruit.append(fruit)
     fruitnum.append(howmany)
-    fruitprice.append(price)
+    fruitprice.append(fruitprice)
     
 def Pomegranate():
     fruit = "Pomegranate"
-    AskNum(fruit)
+    price = 7.50
+    AskNum(fruit, price)
     allfruit.append(fruit)
     fruitnum.append(howmany)
-    fruitprice.append(price)
+    fruitprice.append(fruitprice)
     
 def DurianFruit():
     fruit = "DurianFruit"
-    AskNum(fruit)
+    price = 25.99
+    AskNum(fruit, price)
     allfruit.append(fruit)
     fruitnum.append(howmany)
-    fruitprice.append(price)
+    fruitprice.append(fruitprice)
 
 
-def AskNum(fruit):
-    global howmany, price
+def AskNum(fruit, price):
+    global howmany, fruitprice
     howmany=str(input("How many " + fruit + "you want to buy"))
     CheckNum(howmany)
     howmany = int(howmany)
-    price = howmany * price
+    fruitprice = howmany * price
 
     
 def CheckNum(num):
