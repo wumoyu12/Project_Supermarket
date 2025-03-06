@@ -13,12 +13,14 @@ def AskFruit():
     menu="We have the following fruits:\n1.Apple:$0.98 for each\n2.Pear: 0.99 for each\n3.Orange: $0.96 each\n4.Pomegranate: $7.50 for each\n5.Durian Fruit: $25.99 for each\nType 01 to check what did you bought in Fruit Section\nTypy 0 to go back to Main Menu"
     print(menu)
     whichfruit=str(input("Which type fruit you want to buy?"))
-    CheckFruit()
+    CheckOption()
     
-def CheckFruit():
+def CheckOption():
     match(whichfruit):
         case "0":
             MainMunu()
+        case "01":
+            CheckFruit()
         case "1":
             Apple()
         case "2":
@@ -40,6 +42,12 @@ def MainMunu():
                 }
     with open(filepath,"rb") as file:
         exec(compile(file.read(), filepath, "exec"), filenamepath)
+
+def CheckFruit():
+    if len(allfruit) == 0:
+        print("You didn't bought anything")
+    else:
+        DisplayInfo()
 
 def Apple():
     fruit = "Apple"
@@ -104,6 +112,12 @@ def CheckNum(num):
                 AskNum()
             else:
                 return(num)
+
+def DisplayInfo():
+    totalprice = 0
+    totalnum = len(allfruit)
+    for i in range(0, totalnum)
+        totalprice=fruitprice[i]
 
 if __name__ == "__main__":
     main()
