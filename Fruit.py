@@ -7,13 +7,11 @@ def main():
     
 def AskFruit():
     global whichfruit
-    print("We have the following fruits:\n"
-          "1.Apple:$0.98 for each\n"
-          "2.Pear: 0.99 for each\n"
-          "3.Orange: $0.96 each\n"
-          "4.Pomegranate: $7.50 for each\n"
-          "5.Durian Fruit: $25.99 for each\n"
-          "Typy 0 to go back to Main Menu")
+    allfruit = []
+    fruitnum = []
+    fruitprice = []
+    menu="We have the following fruits:\n1.Apple:$0.98 for each\n2.Pear: 0.99 for each\n3.Orange: $0.96 each\n4.Pomegranate: $7.50 for each\n5.Durian Fruit: $25.99 for each\nType 01 to check what did you bought in Fruit Section\nTypy 0 to go back to Main Menu"
+    print(menu)
     whichfruit=str(input("Which type fruit you want to buy?"))
     CheckFruit()
     
@@ -44,22 +42,63 @@ def MainMunu():
         exec(compile(file.read(), filepath, "exec"), filenamepath)
 
 def Apple():
-    AskNum()
-
+    fruit = "Apple"
+    AskNum(fruit)
+    allfruit.append(fruit)
+    fruitnum.append(howmany)
+    fruitprice.append(price)
+    
 def Pear():
-    AskNum()
-
+    fruit = "Pear"
+    AskNum(fruit)
+    allfruit.append(fruit)
+    fruitnum.append(howmany)
+    fruitprice.append(price)
+    
 def Orange():
-    AskNum()
+    fruit = "Orange"
+    AskNum(fruit)
+    allfruit.append(fruit)
+    fruitnum.append(howmany)
+    fruitprice.append(price)
     
 def Pomegranate():
-    AskNum()
+    fruit = "Pomegranate"
+    AskNum(fruit)
+    allfruit.append(fruit)
+    fruitnum.append(howmany)
+    fruitprice.append(price)
     
 def DurianFruit():
-    AskNum()
+    fruit = "DurianFruit"
+    AskNum(fruit)
+    allfruit.append(fruit)
+    fruitnum.append(howmany)
+    fruitprice.append(price)
 
-def AskNum(fruits):
-    howmany=str(input("How many fruits you want to buy"))
+
+def AskNum(fruit):
+    global howmany, price
+    howmany=str(input("How many " + fruit + "you want to buy"))
+    CheckNum(howmany)
+    howmany = int(howmany)
+    price = howmany * price
+
+    
+def CheckNum(num):
+    length=len(num)
+    if (length == 0 or num == "0"):
+        print("It's invalid input, please try again")
+        AskNum()
+    else:
+        numlist=list(num)
+        for i in range(0,len(numlist)):
+            newnum=ord(numlist[i])
+            if(newnum < 49 or newnum >58):
+                print("invalid")
+                AskNum()
+            else:
+                return(num)
 
 if __name__ == "__main__":
     main()
