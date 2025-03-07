@@ -6,7 +6,7 @@ def main():
     AskFruit()
     
 def AskFruit():
-    global whichfruit
+    global whichfruit, allfruit, fruitnum, fruitprice
     allfruit = []
     fruitnum = []
     fruitprice = []
@@ -79,7 +79,8 @@ def Pomegranate():
     AskNum(fruit, price)
     allfruit.append(fruit)
     fruitnum.append(howmany)
-    fruitprice.append(fruitprice)
+    price = str(fruitprice)
+    fruitprice.append(price)
     
 def DurianFruit():
     fruit = "DurianFruit"
@@ -116,7 +117,7 @@ def CheckNum(num):
 def DisplayInfo():
     totalprice = 0
     totalnum = len(allfruit)
-    for i in range(0, totalnum)
+    for i in range(0, totalnum):
         totalprice=fruitprice[i]
 
 if __name__ == "__main__":
