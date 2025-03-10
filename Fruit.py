@@ -33,6 +33,8 @@ def CheckOption():
             DurianFruit()
         case default:
             print("It's an invalid selection, please try again")
+            AskFruit()
+            
 def MainMunu():
     fileDir=os.path.dirname(os.path.realpath("__file__"))
     filepath=fileDir+"\MainMenu.py"
@@ -53,9 +55,6 @@ def Apple():
     fruit = "Apple"
     price = 0.98
     AskNum(fruit, price)
-    allfruit.append(fruit)
-    fruitnum.append(howmany)
-    fruitprice.append(fruitprice)
     
 def Pear():
     fruit = "Pear"
@@ -69,34 +68,27 @@ def Orange():
     fruit = "Orange"
     price = 0.96
     AskNum(fruit, price)
-    allfruit.append(fruit)
-    fruitnum.append(howmany)
-    fruitprice.append(fruitprice)
     
 def Pomegranate():
     fruit = "Pomegranate"
     price = 7.50
     AskNum(fruit, price)
-    allfruit.append(fruit)
-    fruitnum.append(howmany)
-    price = str(fruitprice)
-    fruitprice.append(price)
     
 def DurianFruit():
     fruit = "DurianFruit"
     price = 25.99
     AskNum(fruit, price)
-    allfruit.append(fruit)
-    fruitnum.append(howmany)
-    fruitprice.append(fruitprice)
-
 
 def AskNum(fruit, price):
     global howmany, fruitprice
     howmany=str(input("How many " + fruit + "you want to buy"))
     CheckNum(howmany)
-    howmany = int(howmany)
-    fruitprice = howmany * price
+    fruitprice = int(howmany) * price
+    fruitprice = str(fruitprice)
+    
+    allfruit.append(fruit)
+    fruitnum.append(howmany)
+    fruitprice.append(fruitprice)
 
     
 def CheckNum(num):
