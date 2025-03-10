@@ -121,5 +121,11 @@ def AddToFile():
 
     AskFruit()
 
+def Display():
+    pyfile=open(filename, "r")
+    print(pyfile.readline())
+    pyfile.close()
+    
+
 if __name__ == "__main__":
     main()
