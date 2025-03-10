@@ -3,13 +3,19 @@ from os import path
 
 def main():
     print("Welcome to the Fruit Section!")
+    FileConnectivity()
     AskFruit()
-    
+
+def FileConnectivity():
+    filename = "userinfo.doc"
+    fileDir = os.path.dirname(os.path.realpath("__file__"))
+    fileexist = bool(path.exists(filename))
+    if (fileexist == True):
+        print("1-Continue/n2-Back")
+
 def AskFruit():
     global whichfruit, allfruit, fruitnum, fruitprice
     allfruit = []
-    fruitnum = []
-    fruitprice = []
     menu="We have the following fruits:\n1.Apple:$0.98 for each\n2.Pear: 0.99 for each\n3.Orange: $0.96 each\n4.Pomegranate: $7.50 for each\n5.Durian Fruit: $25.99 for each\nType 01 to check what did you bought in Fruit Section\nTypy 0 to go back to Main Menu"
     print(menu)
     whichfruit=str(input("Which type fruit you want to buy?"))
@@ -60,9 +66,6 @@ def Pear():
     fruit = "Pear"
     price = 0.99
     AskNum(fruit, price)
-    allfruit.append(fruit)
-    fruitnum.append(howmany)
-    fruitprice.append(fruitprice)
     
 def Orange():
     fruit = "Orange"
@@ -86,9 +89,6 @@ def AskNum(fruit, price):
     fruitprice = int(howmany) * price
     fruitprice = str(fruitprice)
     
-    allfruit.append(fruit)
-    fruitnum.append(howmany)
-    fruitprice.append(fruitprice)
 
     
 def CheckNum(num):
