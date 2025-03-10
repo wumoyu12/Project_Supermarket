@@ -7,11 +7,16 @@ def main():
     AskFruit()
 
 def FileConnectivity():
-    filename = "userinfo.doc"
+    global filename
+    filename = "fruit.doc"
     fileDir = os.path.dirname(os.path.realpath("__file__"))
     fileexist = bool(path.exists(filename))
     if (fileexist == True):
-        print("All things you enter before will be deleted\n1-Continue/n2-Back")
+        print("1-Continue/n2-Back")
+    else:
+       pyfile=open(filename, "w")
+       pyfile.write("Fruit Section\n")
+       pyfile.close()
 
 def AskFruit():
     global whichfruit, allfruit, fruitnum, fruitprice
@@ -61,35 +66,38 @@ def Apple():
     fruit = "Apple"
     price = 0.98
     AskNum(fruit, price)
+    AddToFile(fruit)
     
 def Pear():
     fruit = "Pear"
     price = 0.99
     AskNum(fruit, price)
+    AddToFile(fruit)
     
 def Orange():
     fruit = "Orange"
     price = 0.96
     AskNum(fruit, price)
+    AddToFile(fruit)
     
 def Pomegranate():
     fruit = "Pomegranate"
     price = 7.50
     AskNum(fruit, price)
+    AddToFile(fruit)
     
 def DurianFruit():
     fruit = "DurianFruit"
     price = 25.99
     AskNum(fruit, price)
+    AddToFile(fruit)
 
 def AskNum(fruit, price):
     global howmany, fruitprice
-    howmany=str(input("How many " + fruit + "you want to buy"))
+    howmany=str(input("How many " + fruit + " you want to buy"))
     CheckNum(howmany)
     fruitprice = int(howmany) * price
     fruitprice = str(fruitprice)
-    
-
     
 def CheckNum(num):
     length=len(num)
@@ -106,6 +114,13 @@ def CheckNum(num):
             else:
                 return(num)
 
+def AddToFile():
+    pyfile=open(filename, "a")
+    item = (fruit + "-" + howmany + "   " + fruitprice + "\n")
+    pyfile.write(item)
+    pyfile.close()
+
+    AskFruit()
 
 if __name__ == "__main__":
     main()
