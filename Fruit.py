@@ -106,11 +106,6 @@ def CheckNum(num):
             else:
                 return(num)
 
-def DisplayInfo():
-    totalprice = 0
-    totalnum = len(allfruit)
-    for i in range(0, totalnum):
-        totalprice=fruitprice[i]
 
 if __name__ == "__main__":
     main()
