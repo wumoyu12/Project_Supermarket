@@ -1,0 +1,114 @@
+import os.path
+from os import path
+
+allfruit = []
+
+def main():
+    global allfruit
+    allfruit = []
+    print("Welcome to the Fruit Section!")
+    FileConnectivity()
+    AskFruit()
+
+def FileConnectivity():
+    filename = "fruit.doc"
+    if path.exists(filename):
+        print("Note: Existing invoice file will be overwritten when you view your invoice.")
+
+def AskFruit():
+    menu = """We have the following fruits:
+1. Apple: $0.98 each
+2. Pear: $0.99 each
+3. Orange: $0.96 each
+4. Pomegranate: $7.50 each
+5. Durian Fruit: $25.99 each
+Type '01' to view your invoice
+Type '0' to exit to Main Menu"""
+    print(menu)
+    choice = input("\nEnter your choice: ")
+    CheckOption(choice)
+
+def CheckOption(choice):
+    if choice == "0":
+        MainMenu()
+    elif choice == "01":
+        CheckFruit()
+    elif choice in {"1", "2", "3", "4", "5"}:
+        {
+            "1": Apple,
+            "2": Pear,
+            "3": Orange,
+            "4": Pomegranate,
+            "5": DurianFruit
+        }[choice]()
+    else:
+        print("Invalid selection, please try again.")
+        AskFruit()
+
+def MainMenu():
+    print("\nReturning to Main Menu...")
+    exit()
+
+def CheckFruit():
+    if not allfruit:
+        print("\nYou haven't purchased anything yet.")
+    else:
+        DisplayInfo()
+    AskFruit()
+
+def Apple():
+    ProcessFruit("Apple", 0.98)
+
+def Pear():
+    ProcessFruit("Pear", 0.99)
+
+def Orange():
+    ProcessFruit("Orange", 0.96)
+
+def Pomegranate():
+    ProcessFruit("Pomegranate", 7.50)
+
+def DurianFruit():
+    ProcessFruit("Durian Fruit", 25.99)
+
+def ProcessFruit(name, price):
+    quantity = AskNum(name, price)
+    allfruit.append({
+        "name": name,
+        "quantity": quantity,
+        "unit_price": price,
+        "total": round(quantity * price, 2)
+    })
+    AskFruit()
+
+def AskNum(fruit, price):
+    while True:
+        howmany = input(f"How many {fruit} do you want to buy? ")
+        if howmany.isdigit() and int(howmany) > 0:
+            return int(howmany)
+        print("Invalid input. Please enter a positive integer.")
+
+def DisplayInfo():
+    total = sum(item["total"] for item in allfruit)
+    invoice = [
+        "\n===== Fruit Purchase Invoice =====",
+        "Item\t\tQuantity\tUnit Price\tTotal"
+    ]
+    
+    for item in allfruit:
+        invoice.append(
+            f"{item['name']:15}\t{item['quantity']}\t\t${item['unit_price']:.2f}\t\t${item['total']:.2f}"
+        )
+    
+    invoice.extend([
+        f"\nTotal Amount: ${total:.2f}",
+        "================================"
+    ])
+    
+    print("\n".join(invoice))
+    
+    with open("fruit.doc", "w") as f:
+        f.write("\n".join(invoice))
+
+if __name__ == "__main__":
+    main()
