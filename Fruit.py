@@ -11,7 +11,7 @@ def FileConnectivity():
     fileDir = os.path.dirname(os.path.realpath("__file__"))
     fileexist = bool(path.exists(filename))
     if (fileexist == True):
-        print("1-Continue/n2-Back")
+        print("All things you enter before will be deleted\n1-Continue/n2-Back")
 
 def AskFruit():
     global whichfruit, allfruit, fruitnum, fruitprice
