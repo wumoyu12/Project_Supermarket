@@ -12,6 +12,8 @@ def Askname():
             AskEdit()
         case "2":
             AskDepartments()
+        case default:
+            print("It's an invalid selection, please try again")
 
 def AskUserInfo():
     global filename
@@ -36,7 +38,14 @@ def FileConnectivity():
         AskNewUser()
 
 def AskNewUser();
-    new=str(input("Are you a new user"))
+    new=str(input("Are you a new user if yes enter 1, no enter 2"))
+    match(new):
+        case"1":
+            AskEdit()
+        case "2":
+            AskDepartments()
+        case default:
+            print("It's an invalid selection, please try again")
     
 
 def AskDepartments():
