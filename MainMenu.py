@@ -3,6 +3,44 @@ import os.path
 from os import path
 
 def main():
+    Askname()
+
+def Askname():
+    adminuser=str(input("Are you admin, if yes enter 1, no enter 2"))
+    match(adminuser):
+        case"1":
+            AskEdit()
+        case "2":
+            AskDepartments()
+
+def AskUserInfo():
+    global filename
+    username=str(input("Please Enter Username:"))
+    password=str(input("Please Enter Password:"))
+
+    if (useremail == "" or password == ""):
+        print("Your username or password is invalid, please enter something")
+        AskUserInfo()
+    else:
+        filename="username.doc"
+        
+
+    FileConnectivity()
+
+def FileConnectivity():
+    fileDir = os.path.dirname(os.path.realpath("__file__"))
+    fileexist = bool(path.exists(filename))
+    if (fileexist == True):
+        CheckName()
+    else:
+        AskNewUser()
+
+def AskNewUser();
+    new=str(input("Are you a new user"))
+    
+
+def AskDepartments():
+    global whichchscreen
     fileDir=os.path.dirname(os.path.realpath("__file__"))
     departments=()
     whichchscreen=str(input("Welcome to Supermarket, choose one of the Departments you are interested in.\n"
@@ -14,7 +52,9 @@ def main():
                             "6-Dietary Food (Vegetables, Salad)\n"
                             "7-Kosher\n"
                             "8-Halal"))
+    CheckDepartments()
 
+def CheckDepartments():
     match(whichchscreen):
         case "1":
             filepath=fileDir+"\Fruit.py"
