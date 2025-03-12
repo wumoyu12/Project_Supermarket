@@ -3,17 +3,35 @@ import os.path
 from os import path
 
 def main():
-    Askname()
+    AskUser()
 
-def Askname():
-    adminuser=str(input("Are you admin, if yes enter 1, no enter 2"))
+def AskUser():
+    adminuser=str(input("1-Sign in\n2-Sign up"))
     match(adminuser):
         case"1":
-            AskEdit()
+            AskUserInfo()
         case "2":
-            AskDepartments()
+            CreateAccount()
         case default:
             print("It's an invalid selection, please try again")
+            Askname()
+
+def CreateAccount():
+    username=str(input("please create a  user name:"))
+    FileConnectivity()
+    if (fileexist=="true")
+        print("This username has been used, please create another username")
+        CreateAccount()
+    else:
+        AskPassword()
+
+def AskPassword():
+    password=str(input("please create a password:"))
+    repassword=str(input("please repeat your password:"))
+    if(password == repassword):
+        print("Account Create")
+    else:
+        AskPassword()
 
 def AskUserInfo():
     global filename
@@ -21,23 +39,22 @@ def AskUserInfo():
     password=str(input("Please Enter Password:"))
 
     if (useremail == "" or password == ""):
-        print("Your username or password is invalid, please enter something")
+        print("you have incorrect username or password, please try again.")
         AskUserInfo()
     else:
-        filename="username.doc"
+        filename=username + ".doc"
         
-
     FileConnectivity()
 
 def FileConnectivity():
     fileDir = os.path.dirname(os.path.realpath("__file__"))
     fileexist = bool(path.exists(filename))
     if (fileexist == True):
-        CheckName()
+        fileex = "true"
     else:
-        AskNewUser()
+        fileex = "false"
 
-def AskNewUser();
+def AskNewUser():
     new=str(input("Are you a new user if yes enter 1, no enter 2"))
     match(new):
         case"1":
@@ -46,24 +63,15 @@ def AskNewUser();
             AskDepartments()
         case default:
             print("It's an invalid selection, please try again")
-    
 
 def AskDepartments():
     global whichchscreen
-    fileDir=os.path.dirname(os.path.realpath("__file__"))
-    departments=()
-    whichchscreen=str(input("Welcome to Supermarket, choose one of the Departments you are interested in.\n"
-                            "1-Fruit\n"
-                            "2-Poultry\n"
-                            "3-Meat\n"
-                            "4-Beverage\n"
-                            "5-Frozen Foods\n"
-                            "6-Dietary Food (Vegetables, Salad)\n"
-                            "7-Kosher\n"
-                            "8-Halal"))
+    departments=("Welcome to Supermarket, choose one of the Departments you are interested in.\n1-Fruit\n2-Poultry\n3-Meat\n4-Beverage\n5-Frozen Foods\n6-Dietary Food (Vegetables, Salad)\n7-Kosher\n8-Halal")
+    whichchscreen=str(input(departments))
     CheckDepartments()
 
 def CheckDepartments():
+    fileDir=os.path.dirname(os.path.realpath("__file__"))
     match(whichchscreen):
         case "1":
             filepath=fileDir+"\Fruit.py"
