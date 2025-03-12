@@ -15,7 +15,7 @@ def FileConnectivity():
         print("1-Continue/n2-Back")
     else:
        pyfile=open(filename, "w")
-       pyfile.write("Fruit Section\n")
+       pyfile.write("Fruit Section")
        pyfile.close()
 
 def AskFruit():
@@ -56,44 +56,41 @@ def MainMunu():
         exec(compile(file.read(), filepath, "exec"), filenamepath)
 
 def CheckFruit():
-    if len(allfruit) == 0:
-        print("You didn't bought anything")
-    else:
-        DisplayInfo()
+    print("CheckFruit")
 
 def Apple():
     fruit = "Apple"
     price = 0.98
-    AskNum(fruit, price)
+    AskNum(price)
     AddToFile(fruit)
     
 def Pear():
     fruit = "Pear"
     price = 0.99
-    AskNum(fruit, price)
+    AskNum(price)
     AddToFile(fruit)
     
 def Orange():
     fruit = "Orange"
     price = 0.96
-    AskNum(fruit, price)
+    AskNum(price)
     AddToFile(fruit)
     
 def Pomegranate():
     fruit = "Pomegranate"
     price = 7.50
-    AskNum(fruit, price)
+    AskNum(price)
     AddToFile(fruit)
     
 def DurianFruit():
     fruit = "DurianFruit"
     price = 25.99
-    AskNum(fruit, price)
+    AskNum(price)
     AddToFile(fruit)
 
-def AskNum(fruit, price):
+def AskNum(price):
     global howmany, fruitprice
-    howmany=str(input("How many " + fruit + " you want to buy"))
+    howmany=str(input("How many do you want to buy"))
     CheckNum(howmany)
     fruitprice = int(howmany) * price
     fruitprice = str(fruitprice)
@@ -108,24 +105,23 @@ def CheckNum(num):
         for i in range(0,len(numlist)):
             newnum=ord(numlist[i])
             if(newnum < 49 or newnum >58):
-                print("invalid")
+                print("Your input is invalid, please try again")
                 AskNum()
             else:
                 return(num)
 
-def AddToFile():
+def AddToFile(fruit):
     pyfile=open(filename, "a")
-    item = (fruit + "-" + howmany + "   " + fruitprice + "\n")
+    item = ("\n" + fruit + "-" + howmany + "   " + fruitprice)
     pyfile.write(item)
     pyfile.close()
 
     AskFruit()
 
-def Display():
+def DisplayInfo():
     pyfile=open(filename, "r")
     print(pyfile.readline())
     pyfile.close()
-    
 
 if __name__ == "__main__":
     main()
