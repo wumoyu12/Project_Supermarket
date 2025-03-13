@@ -1,0 +1,29 @@
+# main.py - The starting point to call different modules.
+import os
+import SignIn
+import SignUp
+import Admin
+
+def main():
+    print("1. Admin Sign-In")
+    print("2. User Sign-In/Sign-Up")
+    
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        Admin.admin_menu()
+    elif choice == "2":
+        user_choice = input("1. Sign In\n2. Sign Up\n")
+        if user_choice == "1":
+            SignIn.sign_in()
+        elif user_choice == "2":
+            SignUp.sign_up()
+        else:
+            print("Invalid choice.")
+            main()
+    else:
+        print("Invalid choice.")
+        main()
+
+if __name__ == "__main__":
+    main()
