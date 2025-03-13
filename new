@@ -1,1 +1,177 @@
+import os
+from os import path
 
+def main():
+    AskUser()
+
+def AskUser():
+    print("1 - Sign in\n2 - Sign up")
+    adminuser = input("Select an option: ")
+    
+    match(adminuser):
+        case "1":
+            AskUserInfo()
+        case "2":
+            CreateAccount()
+        case _:
+            print("Invalid selection, please try again.")
+            AskUser()
+
+def CreateAccount():
+    global filename, username
+    username = input("Please create a username: ")
+    filename = username + ".doc"
+    if FileConnectivity(filename) == "true":
+        print("This username is already taken. Please create a new one.")
+        CreateAccount()
+    else:
+        AskPassword()
+
+def AskPassword():
+    global password
+    password = input("Please create a password (at least 4 characters): ")
+    
+    if len(password) < 4:
+        print("Password must be at least 4 characters. Try again.")
+        AskPassword()
+    else:
+        repassword = input("Please repeat your password: ")
+        if password == repassword:
+            with open(filename, "w") as pyfile:
+                pyfile.write(f"{username},{password}")
+            print(f"Account created for {username}.")
+            AskDepartments()  # Admin setup starts here after account creation
+        else:
+            print("Passwords do not match. Try again.")
+            AskPassword()
+
+def AskUserInfo():
+    global filename, username, password
+    username = input("Please enter username: ")
+    password = input("Please enter password: ")
+    
+    filename = username + ".doc"
+    if FileConnectivity(filename) == "false" or len(password) < 4:
+        print("Incorrect username or password (password must be at least 4 characters). Please try again.")
+        AskUserInfo()
+    else:
+        with open(filename, "r") as file:
+            stored_data = file.read()
+            stored_username, stored_password = stored_data.split(",")
+            if stored_username == username and stored_password == password:
+                print("Login successful.")
+                ShowUserMenu()
+            else:
+                print("Incorrect username or password. Please try again.")
+                AskUserInfo()
+
+def FileConnectivity(filename):
+    if path.exists(filename):
+        return "true"
+    return "false"
+
+def AskDepartments():
+    global department_count
+    department_count = int(input("How many departments does your supermarket have? "))
+    departments = {}
+    for i in range(department_count):
+        department_name = input(f"Enter the name of department {i + 1}: ")
+        departments[department_name] = []
+    ShowAdminMenu(departments)
+
+def ShowAdminMenu(departments):
+    print("1 - Add/Edit/Delete department items")
+    print("2 - Change password for user")
+    print("3 - Log out")
+    admin_choice = input("Select an option: ")
+    
+    match(admin_choice):
+        case "1":
+            ManageDepartments(departments)
+        case "2":
+            ChangePasswordForUser()
+        case "3":
+            print("Logging out.")
+            main()  # Log out and return to main menu
+        case _:
+            print("Invalid selection, please try again.")
+            ShowAdminMenu(departments)
+
+def ManageDepartments(departments):
+    print("1 - View items in a department")
+    print("2 - Add item to department")
+    print("3 - Edit item in department")
+    print("4 - Delete item from department")
+    admin_choice = input("Select an option: ")
+    
+    department_name = input("Enter the department name: ")
+    
+    if department_name in departments:
+        match(admin_choice):
+            case "1":
+                print(f"Items in {department_name}: {departments[department_name]}")
+            case "2":
+                item = input(f"Enter item to add to {department_name}: ")
+                departments[department_name].append(item)
+                print(f"Added {item} to {department_name}.")
+            case "3":
+                item = input(f"Enter item to edit in {department_name}: ")
+                if item in departments[department_name]:
+                    new_item = input(f"Enter the new name for {item}: ")
+                    departments[department_name][departments[department_name].index(item)] = new_item
+                    print(f"Edited {item} to {new_item} in {department_name}.")
+                else:
+                    print(f"{item} not found in {department_name}.")
+            case "4":
+                item = input(f"Enter item to delete from {department_name}: ")
+                if item in departments[department_name]:
+                    departments[department_name].remove(item)
+                    print(f"Deleted {item} from {department_name}.")
+                else:
+                    print(f"{item} not found in {department_name}.")
+            case _:
+                print("Invalid option.")
+    else:
+        print(f"{department_name} does not exist.")
+    
+    ShowAdminMenu(departments)
+
+def ShowUserMenu():
+    print("1 - View departments")
+    print("2 - Reset password")
+    print("3 - View all items purchased")
+    print("4 - Log out")
+    user_choice = input("Select an option: ")
+
+    match(user_choice):
+        case "1":
+            ViewDepartments()
+        case "2":
+            ResetPassword()
+        case "3":
+            ViewPurchasedItems()
+        case "4":
+            print("Logging out.")
+            main()  # Log out and return to main menu
+        case _:
+            print("Invalid selection. Try again.")
+            ShowUserMenu()
+
+def ViewDepartments():
+    print("List of available departments:")
+    # This will depend on your department setup logic
+    print("Departments will be displayed here.")
+
+def ResetPassword():
+    new_password = input("Enter a new password: ")
+    with open(filename, "w") as pyfile:
+        pyfile.write(f"{username},{new_password}")
+    print("Password updated.")
+
+def ViewPurchasedItems():
+    print("List of items you bought:")
+    # This will depend on your department setup logic
+    print("Purchased items will be displayed here.")
+
+if __name__ == "__main__":
+    main()
