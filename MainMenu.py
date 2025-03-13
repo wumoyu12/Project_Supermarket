@@ -18,8 +18,9 @@ def AskUser():
 
 def CreateAccount():
     username=str(input("please create a  user name:"))
+    file
     FileConnectivity()
-    if (fileexist=="true")
+    if (fileexist=="true"):
         print("This username has been used, please create another username")
         CreateAccount()
     else:
