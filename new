@@ -2,56 +2,66 @@ import sys
 import os
 from os import path
 
-# Global variable to store the filename
-filename = ""
+
+
 
 def main():
     AskUser()
 
 def AskUser():
+    global filename, username, password
     adminuser = input("1-Sign in\n2-Sign up\n")
     match(adminuser):
         case "1":
             AskUserInfo()
         case "2":
             CreateAccount()
-        case _:
+        case default:
             print("It's an invalid selection, please try again.")
             AskUser()
 
 def CreateAccount():
     username = input("Please create a username: ")
-    global filename
     filename = username + ".doc"
-    FileConnectivity()
+    FileConnectivity(filename)
     if fileexist == "true":
-        print("This username has been used, please create another username.")
+        print("This username has been used, please create a new one.")
         CreateAccount()
     else:
         AskPassword()
 
 def AskPassword():
     password = input("Please create a password: ")
+    lenpassword = len(password)
+    
     repassword = input("Please repeat your password: ")
     if password == repassword:
-        print("Account created!")
+        pyfile = open(filename, "w")
+        pyfile.write(username + "," + password)
+        pyfile.close()
     else:
         print("Passwords do not match. Please try again.")
         AskPassword()
 
 def AskUserInfo():
-    global filename
     username = input("Please enter username: ")
     password = input("Please enter password: ")
-
-    if username == "" or password == "":
-        print("You have entered incorrect username or password, please try again.")
+    if (lenpassword <= 4):
+        print("At least 4 digit, please try again")
         AskUserInfo()
-    else:
+    else:  
         filename = username + ".doc"
-        FileConnectivity()
+        FileConnectivity(filename)
+        lenpassword = len(password)
+        
+        if username == "" or lenpassword <= 4 or fileexist=="false":
+            print("You have entered incorrect username or password(At least 4 digit), please try again.")
+            AskUserInfo()
+        else:
+            #Go to Menu
+            print("Both are correct")       
 
-def FileConnectivity():
+def FileConnectivity(filename):
     global fileexist
     fileDir = os.path.dirname(os.path.realpath("__file__"))
     if path.exists(filename):
@@ -59,29 +69,17 @@ def FileConnectivity():
     else:
         fileexist = "false"
 
-def AskNewUser():
-    new = input("Are you a new user? If yes, enter 1, if no, enter 2: ")
-    match(new):
-        case "1":
-            AskEdit()
-        case "2":
-            AskDepartments()
-        case _:
-            print("It's an invalid selection, please try again.")
-
 def AskDepartments():
     global whichchscreen
     departments = ("Welcome to Supermarket, choose one of the Departments you are interested in.\n"
-                   "1-Fruit\n2-Poultry\n3-Meat\n4-Beverage\n5-Frozen Foods\n6-Dietary Food (Vegetables, Salad)\n"
-                   "7-Kosher\n8-Halal\n")
+                   "1-Fruit\n2-Poultry\n3-Meat\n4-Beverage\n5-Frozen Foods\n6-Dietary Food (Vegetables, Salad)\n7-Kosher\n8-Halal\n")
     whichchscreen = input(departments)
     CheckDepartments()
 
 def CheckDepartments():
     global whichchscreen
     fileDir = os.path.dirname(os.path.realpath("__file__"))
-    
-    # Selecting the path based on department choice
+
     match(whichchscreen):
         case "1":
             filepath = os.path.join(fileDir, "Fruit.py")
@@ -99,22 +97,21 @@ def CheckDepartments():
             filepath = os.path.join(fileDir, "Kosher.py")
         case "8":
             filepath = os.path.join(fileDir, "Halal.py")
-        case _:
+        case default:
             print("It's an invalid selection, please try again.")
             main()
-            return  # Exit CheckDepartments if invalid input
+                
     ExecuteDepartmentFile(filepath)
 
 def ExecuteDepartmentFile(filepath):
-    # Ensure the file exists before trying to execute it
     if os.path.exists(filepath):
         filenamepath = {
             "__file__": filepath,
             "__name__": "__main__",
-        }
+            }
         with open(filepath, "rb") as file:
             exec(compile(file.read(), filepath, "exec"), filenamepath)
-        main()  # Call main again after executing the department file
+        main()
     else:
         print(f"The department file at {filepath} does not exist.")
         main()
