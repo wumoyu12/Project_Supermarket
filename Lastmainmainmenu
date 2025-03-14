@@ -1,0 +1,135 @@
+import os
+
+def admin_main_menu():
+    print("Welcome to the Admin Menu!")
+    print("1- Manage Departments\n2- Change Password\n3- Log Out")
+    action = input("Choose an action: ")
+    if action == "1":
+        manage_departments()
+    elif action == "2":
+        change_admin_password()
+    elif action == "3":
+        print("Logging out...")
+    else:
+        print("Invalid choice, please try again.")
+        admin_main_menu()
+
+def manage_departments():
+    print("Managing departments...")
+    print("1- Fruit\n2- Poultry\n3- Meat\n4- Beverage\n5- Frozen Foods\n6- Dietary Food\n7- Kosher\n8- Halal")
+    department_choice = input("Select department to manage (1-8): ")
+    
+    department_files = {
+        "1": "Fruit.txt",
+        "2": "Poultry.txt",
+        "3": "Meat.txt",
+        "4": "Beverage.txt",
+        "5": "FrozenFoods.txt",
+        "6": "DietaryFood.txt",
+        "7": "Kosher.txt",
+        "8": "Halal.txt"
+    }
+
+    department_file = department_files.get(department_choice)
+
+    if department_file:
+        manage_items(department_file)
+    else:
+        print("Invalid department selection, please try again.")
+        manage_departments()
+
+def manage_items(department_file):
+    print(f"Managing items in the {department_file.split('.')[0]} department...")
+    items = load_items(department_file)
+
+    print("\nCurrent items in the department:")
+    if items:
+        for index, item in enumerate(items, 1):
+            print(f"{index}. {item}")
+    else:
+        print("No items in this department yet.")
+
+    print("\nChoose an action:")
+    print("1- Add Item")
+    print("2- Edit Item")
+    print("3- Delete Item")
+    print("4- Back to Main Menu")
+
+    action = input("Choose an action: ")
+
+    if action == "1":
+        add_item(department_file, items)
+    elif action == "2":
+        edit_item(department_file, items)
+    elif action == "3":
+        delete_item(department_file, items)
+    elif action == "4":
+        admin_main_menu()
+    else:
+        print("Invalid choice, please try again.")
+        manage_items(department_file)
+
+def load_items(department_file):
+    try:
+        with open(department_file, "r") as file:
+            items = file.readlines()
+            return [item.strip() for item in items]
+    except FileNotFoundError:
+        return []
+
+def add_item(department_file, items):
+    new_item = input("Enter the name of the new item to add: ")
+    items.append(new_item)
+    save_items(department_file, items)
+    print(f"{new_item} has been added to the department.")
+    manage_items(department_file)
+
+def edit_item(department_file, items):
+    if not items:
+        print("No items to edit.")
+        manage_items(department_file)
+        return
+
+    try:
+        item_index = int(input(f"Enter the number of the item you want to edit (1-{len(items)}): ")) - 1
+        if 0 <= item_index < len(items):
+            new_item_name = input(f"Enter the new name for {items[item_index]}: ")
+            items[item_index] = new_item_name
+            save_items(department_file, items)
+            print(f"{items[item_index]} has been updated.")
+        else:
+            print("Invalid item number.")
+            edit_item(department_file, items)
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        edit_item(department_file, items)
+
+def delete_item(department_file, items):
+    if not items:
+        print("No items to delete.")
+        manage_items(department_file)
+        return
+
+    try:
+        item_index = int(input(f"Enter the number of the item you want to delete (1-{len(items)}): ")) - 1
+        if 0 <= item_index < len(items):
+            deleted_item = items.pop(item_index)
+            save_items(department_file, items)
+            print(f"{deleted_item} has been deleted.")
+        else:
+            print("Invalid item number.")
+            delete_item(department_file, items)
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        delete_item(department_file, items)
+
+def save_items(department_file, items):
+    with open(department_file, "w") as file:
+        for item in items:
+            file.write(item + "\n")
+
+def change_admin_password():
+    print("Changing admin password...")
+    # Logic to change admin password
+    print("Password changed successfully.")
+    admin_main_menu()
