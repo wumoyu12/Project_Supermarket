@@ -1,0 +1,65 @@
+import os
+
+def admin_main_menu():
+    print("Welcome to the Admin Menu!")
+    print("1- Manage Departments\n2- Change Password\n3- Log Out")
+    action = input("Choose an action: ")
+    if action == "1":
+        manage_departments()
+    elif action == "2":
+        change_admin_password()
+    elif action == "3":
+        print("Logging out...")
+    else:
+        print("Invalid choice, please try again.")
+        admin_main_menu()
+
+def manage_departments():
+    print("Managing departments...")
+    # Code to manage departments here (add/edit/delete items)
+    print("1- Fruit\n2- Poultry\n3- Meat\n4- Beverage\n5- Frozen Foods\n6- Dietary Food\n7- Kosher\n8- Halal")
+    department_choice = input("Select department to manage: ")
+    # Implement department logic here
+    print(f"Managing {department_choice} department.")
+
+def change_admin_password():
+    print("Changing admin password...")
+    # Logic to change admin password
+    print("Password changed successfully.")
+    admin_main_menu()
+
+def user_main_menu(username):
+    print(f"Welcome {username}!")
+    print("1- Browse Departments\n2- Reset Password\n3- Check Purchases\n4- Log Out")
+    action = input("Choose an action: ")
+    if action == "1":
+        browse_departments(username)
+    elif action == "2":
+        reset_user_password(username)
+    elif action == "3":
+        check_user_purchases(username)
+    elif action == "4":
+        print("Logging out...")
+    else:
+        print("Invalid choice, please try again.")
+        user_main_menu(username)
+
+def browse_departments(username):
+    print("Browsing departments...")
+    # Code for browsing departments, adding to the user's cart, etc.
+    print("1- Fruit\n2- Poultry\n3- Meat\n4- Beverage\n5- Frozen Foods\n6- Dietary Food\n7- Kosher\n8- Halal")
+    department_choice = input("Select department to browse: ")
+    # Add purchase logic for the department here
+    print(f"Browsing {department_choice} department.")
+
+def reset_user_password(username):
+    print("Resetting user password...")
+    # Logic to reset user password
+    print("Password reset successfully.")
+    user_main_menu(username)
+
+def check_user_purchases(username):
+    print(f"Checking purchases for {username}...")
+    # Logic to check user's purchases
+    print("Displaying purchases.")
+    user_main_menu(username)
