@@ -3,58 +3,57 @@ import os.path
 from os import path
 
 def main():
-    ChooseDepartment();
+    customer_shopping()
+
+def customer_shopping():
+    base_dir = os.path.dirname(os.path.realpath("__file__"))
     
-def ChooseDepartment():
-    global whichdepartment,fileDir,existingdepartments
-    fileDir = os.path.dirname(os.path.realpath("__file__"));
+    with open("alldepartments.txt", "r") as f:
+        available_depts = []
+        for num in f.read().split(","):
+            if len(num) > 0:
+                available_depts.append(int(num))
     
-    departmentlist = [];
-    departmentFile = open("alldepartments.txt","r+");
-    departmentlist = departmentFile.read().split(",");
+    department_names = ["Fruit", "Poultry", "Meat", "Beverage", 
+                       "Frozenfood", "Dietfood", "Kosher", "Halal"]
     
-    Departments = ["Fruit","Poultry","Meat","Beverage","Frozen Foods","Dietary Food","Kosher","Halal"]
-    existingdepartments = []
-    
-    length = len(departmentlist)-1;
-    for i in range(length):
-        num = departmentlist[i]
-        dep = Departments[int(num)-1]
-        print(str(i+1)+ ". " + dep);
-        existingdepartments.append(dep);
+    while True:
+        print("\n=== MAIN MENU ==="
+              "\nAvailable Departments:")
+        idx = 1
+        while idx <= len(available_depts):
+            print(f"{idx}. {department_names[available_depts[idx-1]-1]}")
+            idx += 1
         
-    whichdepartment = str(input("Type a number to choose a department: "));
-    CheckNum(whichdepartment);
-    if(ifcorrect != 0):
-        print("Invalid input, please try again");
-        ChooseDepartment()
-    else:
-        if(int(whichdepartment) > length):
-            print("Invalid input, please try again");
-            ChooseDepartment()
-        else:
-            MatchDepartment();
+        print("\n9. View Cart"
+              "\n0. Logout")
+        
+        choice = str(input("\nSelect department or option (1-9, 0): "))
+
+        match (choice):
+            case "0":
+                print("Logging out...")
+                execute_script("login.py")
+                return
+            case "9":
+                execute_script("receipt.py")
+                return
+            case _ if choice.isdigit() and 1 <= int(choice) <= len(available_depts):
+                selected_dept = department_names[available_depts[int(choice)-1]-1]
+                execute_script(f"{selected_dept.lower()}.py")
+                return
+            case default:
+                print("Invalid selection! Please try again.")
+
+def execute_script(filepath):
+    script_path = os.path.dirname(os.path.realpath("__file__"))
+
+    namepath={"__file__":file
+              ""
+              }
     
-def CheckNum(item):
-    global ifcorrect
-    ifcorrect = 0;
-    checkitem = ord(item)
-    if(checkitem >= 49 and checkitem <= 56):
-        ifcorrect = ifcorrect + 0;
-    else:
-        ifcorrect = ifcorrect + 1;
-              
-def MatchDepartment():
-    number = int(whichdepartment)-1
-    whichdep = existingdepartments[number];
-    filepath = fileDir + "\\" + whichdep + ".py";
-    
-    filenamepath = {
-        "__file__":filepath,
-        "__name__":"__main__",
-        };
-    with open(filepath,"rb")as file:
-        exec(compile(file.read(),filepath,"exec"),filenamepath);
+    with open(script_path, "rb") as f:
+        exec(compile(f.read(), script_path, "exec"), exec_vars)
 
 if __name__ == "__main__":
-    main();
+    main()
